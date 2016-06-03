@@ -11,12 +11,12 @@ public class Main
 	public static void main(String[] args) throws IllegalClassFormatException,IOException
 	{
 		Main mymain = new Main();
-		String train = "";
-		String module_save = "";
-		String test = "";
+		String train = "D:/essay_generation/ltrtrain.txt";
+		String module_save = "D:/essay_generation/ltr.module";
+		String test = "D:/essay_generation/ltrtest.txt";
 		int savestep = 500;
-		int step = 4000;
-		double alpha = 0.01;
+		int step = 40000;
+		double alpha = 3;
 		for (int i = 0 ; i < args.length; i++)
 		{
 			if("train" == args[i])
@@ -45,21 +45,25 @@ public class Main
 			}
 		}
 		Normalizer normalizer = new Normalizer(train,test);
+		System.out.print("finish normalizer\n");
 		mymain.featrue_num = normalizer.NormalizerData();
 		if(mymain.featrue_num == -1) 
 		{
 			System.out.print("data normalizer error\n");
 			System.exit(-1);
 		}
-		ReadData readdata = new ReadData(mymain.featrue_num,train+"nomalize",test+"nomalize");
+		ReadData readdata = new ReadData(mymain.featrue_num,train+"normalize",test+"normalize");
+		System.out.print("finish read train data\n");
 		if( ! readdata.Read())
 		{
 			System.out.print("data read error\n");
 			System.exit(-1);
 		}
 		Train mytrain = new Train(readdata,step,savestep,module_save,alpha);
+		
 		Module mymodule = mytrain.train();
-		mymodule.write(new File(module_save));	
+		System.out.print("finish train\n");
+		mymodule.write(module_save);	
 		
 	}
 	

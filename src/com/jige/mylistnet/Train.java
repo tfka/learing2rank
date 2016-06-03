@@ -22,7 +22,7 @@ public class Train
 		weights = new double[this.featrue_num];
 		for(int i = 0 ; i < featrue_num; i++)
 		{
-			weights[i] = 0;
+			weights[i] = 1;
 		}
 		this.step = step;
 		this.save_step = save_step;
@@ -34,6 +34,7 @@ public class Train
 	{
 		for(int i = 0 ; i < step; i++)
 		{
+			System.out.print(i + "\n");
 			readdata.setCur();
 			Sample sample = null;
 			double[] oldweights = Arrays.copyOf(weights, weights.length);
@@ -69,14 +70,21 @@ public class Train
 					weights[f] -= alpha * deltaW;
 				}
 			}
+			//System.out.print("xxx");
 			if((save_step > 0 && (i % save_step == 0)) && step > 0 )
 			{
 				Module m = Module.getModule(weights);
-				m.write(new File("tmp" + "_" + String.valueOf(i) + ".module"));
+				m.write("tmp" + "_" + String.valueOf(i) + ".module");
 			}
-			
-			
+			double sum = 0.0;
+			for (int v=0; v<weights.length; v++)
+			{
+				sum += Math.pow(oldweights[v]-weights[v], 2);
+			}
+			//System.out.println(sum);
 		}
+		for(int i = 0 ; i < weights.length; i++)
+			System.out.print(weights[i]+ " ");
 		return Module.getModule(weights);
 	}
 	

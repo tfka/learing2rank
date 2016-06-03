@@ -34,7 +34,7 @@ public class ReadData
 			sample.setQid(Integer.parseInt(parts[1]));
 			for(int i = 3; i < parts.length - 1; i++)
 			{
-				featrue[i - 3] = Integer.parseInt(parts[i]);
+				featrue[i - 3] = Double.parseDouble(parts[i]);
 			}
 			sample.addFeatrues(featrue);
 			sample.addReses(Integer.parseInt(parts[parts.length - 1]));
@@ -52,7 +52,7 @@ public class ReadData
 			}
 			for(int i = 3; i < parts.length - 1; i++)
 			{
-				featrue[i - 3] = Integer.parseInt(parts[i]);
+				featrue[i - 3] = Double.parseDouble(parts[i]);
 			}
 			sample.addFeatrues(featrue);
 			sample.addReses(Integer.parseInt(parts[parts.length - 1]));
@@ -68,7 +68,7 @@ public class ReadData
 	{
 		if(cur >= Samples.size())
 			return null;
-		return Samples.get(cur);
+		return Samples.get(cur++);
 	}
 
 }
